@@ -23,11 +23,11 @@ export default {
 		top: 30px;
 		left: 100px;
 
-		font-size: @h;
+		font-size: @h; /*px*/
 		border-radius: 10px;
 		transform: rotate(20deg);
 
-		width: 300px;
+		width: 300px; /*no*/
 		height: 300px;
 		background: rgba(0, 0, 0, .4);
 	}

@@ -5,6 +5,8 @@ import App from './App'
 import VueRouter from "vue-router"
 import routes from "./routerConfig"
 
+import Flexible from "lib-flexible"
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({

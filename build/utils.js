@@ -38,7 +38,7 @@ exports.cssLoaders = function (options) {
   return {
     css: generateLoaders(['css']),
     postcss: generateLoaders(['css']),
-    less: generateLoaders(['css', 'less']),
+    less: generateLoaders(['css', 'less', 'px2rem']),
     sass: generateLoaders(['css', 'sass?indentedSyntax']),
     scss: generateLoaders(['css', 'sass']),
     stylus: generateLoaders(['css', 'stylus']),
