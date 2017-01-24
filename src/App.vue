@@ -7,10 +7,10 @@
 </template>
 
 <script>
-    import Hello from './components/Hello'
-
+    // import Store from "store"
     export default {
     	name: 'app',
+        // Store
     }
 </script>
 

@@ -5,15 +5,24 @@
 </template>
 
 <script>
-export default {
-	data() {
-		return {}
-	},
-	computed: {},
-	mounted() {},
-	methods: {},
-	components: {}
-}
+import { mapActions } from "vuex"
+	export default {
+		data() {
+			return {}
+		},
+		computed: {},
+		mounted() {
+			console.log(this.$store);
+			this.setGoodsName("篮球");
+			// this.$store.dispatch("setGoodsName", "篮球");
+		},
+		methods: {
+			...mapActions([
+				"setGoodsName"
+			])
+		},
+		components: {}
+	}
 </script>
 
 <style lang="less">

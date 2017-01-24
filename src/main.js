@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import VueRouter from "vue-router"
 import routes from "./routerConfig"
+import store from 'store'
 
 import Flexible from "lib-flexible"
 
@@ -18,5 +19,6 @@ const app = new Vue({
     el: '#app',
     template: '<App/>',
     components: { App },
-    router
+    router,
+    store
 });
