@@ -31,6 +31,9 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 #### 安装 *vue-router*
 > 参考文档 [vue-router的配置](https://router.vuejs.org/zh-cn/)
 
+#### 安装 *vuex*
+> 参考文档 [vux的配置](https://vuex.vuejs.org/zh-cn/)
+
 #### 配置 *autoprefixer*
 > 在目录文件`/build/webpack.base.config.js`修改：
 ```
