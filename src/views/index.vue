@@ -12,7 +12,7 @@ import { mapActions } from "vuex"
 		},
 		computed: {},
 		mounted() {
-			console.log(this.$store);
+			// console.log(this.$store);
 			this.setGoodsName("篮球");
 			// this.$store.dispatch("setGoodsName", "篮球");
 		},

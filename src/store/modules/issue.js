@@ -5,7 +5,7 @@ let state = {
 }
 
 let mutations = {
-    [types.SET_GOODS_NAME] (state, goodsNames) {
+    [types.SET_GOODS_NAME] (state, goodsName) {
         state.goodsName = goodsName;
     }
 }
