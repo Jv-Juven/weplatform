@@ -84,3 +84,6 @@ npm install lib-flexible -D
 ```
 import Flexible from "lib-flexible"
 ```
+
+#### 引入muse-ui作为ui基本框架
+> 参考文档[MuseUI](https://museui.github.io/#/appbar)

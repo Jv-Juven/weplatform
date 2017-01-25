@@ -8,6 +8,12 @@ import store from 'store'
 
 import Flexible from "lib-flexible"
 
+// 加入muse-ui
+import MuseUI from 'muse-ui'
+import 'muse-ui/dist/muse-ui.css'
+
+Vue.use(MuseUI)
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({

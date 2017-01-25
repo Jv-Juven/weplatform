@@ -12,6 +12,8 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "keycode": "^2.1.8",
+    "muse-ui": "^2.0.0-rc.5",
     "vue": "^2.1.0"
   },
   "devDependencies": {
