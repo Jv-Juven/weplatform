@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         <div class="app">
-            <title-header></title-header>
+            <!-- 头部 -->
+            <title-header v-if="false"></title-header>
+            <!-- 路由体 -->
             <router-view></router-view>
         </div>
     </div>
@@ -19,6 +21,8 @@
 </script>
 
 <style lang="less">
+    @import "./assets/less/main.less";
+    #app,
     .app {
         position: relative;
         top: 0;
