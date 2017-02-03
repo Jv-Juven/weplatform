@@ -52,5 +52,6 @@
         width: 100%;
         overflow: hidden;
         background: white;
+        margin-bottom: 60px;
     }
 </style>
