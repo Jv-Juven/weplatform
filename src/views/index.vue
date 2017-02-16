@@ -15,6 +15,7 @@
 
 	// 导入相关工具
 	import Validator from "assets/js/validator"
+	import Test from "assets/js/test"
 	export default {
 		data() {
 			return {}
@@ -24,6 +25,7 @@
 			this.setGoodsName("篮球");
 
 			let formValidator = new Validator();
+			// 导入验证策略
 			formValidator.importStrategies({
 				isNumber: function (value) {
 					return !isNaN(value);
@@ -31,7 +33,15 @@
 			});
 			formValidator.valid("faf", "isNumber", "不是数字");
 			formValidator.valid("faf", "isNumber", "肯定不是数字");
+			formValidator.start();
 			console.warn(formValidator.errors);
+
+
+			var t = new Test();
+			t.add("a");
+			t.add("b");
+			t.add("c");
+			t.start();
 		},
 		methods: {
 			...mapActions([

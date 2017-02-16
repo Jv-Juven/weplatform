@@ -16,9 +16,18 @@
  */
 var Validator = function () {
     this.strategies = {}; // 实例对象的验证策略集合
+    this.validators = []; // 验证队列
     this.errors = []; // 验证函数队列
 }
 
+/**
+* 添加策略
+* @param {[String]} name     [策略名字]
+* @param {[Function]} strategy [策略函数体]
+*/
+Validator.prototype.addStrategies = function (name, strategy) {
+    this.strategies[name] = strategy;
+};
 /**
 * 导入验证策略函数
 * @param  {[object]} strategies [策略函数对象（键值对形式）]
@@ -34,14 +43,6 @@ Validator.prototype.importStrategies = function (strategies) {
     }
 };
 /**
- * 添加策略
- * @param {[String]} name     [策略名字]
- * @param {[Function]} strategy [策略函数体]
- */
-Validator.prototype.addStrategies = function (name, strategy) {
-    this.strategies[name] = strategy;
-};
-/**
  * 验证函数
  * @param  {[String, Array...]} value      [验证的值]
  * @param  {[String]} rule       [验证规则]
@@ -54,22 +55,37 @@ Validator.prototype.valid = function (value, ruleElement, errMsg) {
         return;
     }
 
-    var result,
-    ruleName,
-    ruleParams;
-    var params = [];
-    var ruleElement = ruleElement.split(":");
+    var that = this;
 
-    ruleName = ruleElement[0]; // 规则名字
-    ruleParams = ruleElement[1]; // 规则函数的参数
-    params.push(value);
-    
-    ruleParams != "" && ruleParams !== null && ruleParams !== undefined && params.push(ruleParams);
-    // 执行验证函数, 正确返回true，错误返回errMsg
-    result = this.strategies[ruleName].apply(this, params);
-    result = !!result ? result : errMsg;
-    this.errors.push(result);
+    this.validators.push(function () {
+        var result,
+            ruleName,
+            ruleParams;
+        var params = [];
+        ruleElement = ruleElement.split(":");
+
+        ruleName = ruleElement[0]; // 规则名字
+        ruleParams = ruleElement[1]; // 规则函数的参数
+        params.push(value);
+
+        ruleParams != "" && ruleParams !== null && ruleParams !== undefined && params.push(ruleParams);
+        // 执行验证函数, 正确返回true，错误返回errMsg
+        result = that.strategies[ruleName].apply(that, params);
+        result = !!result ? result : errMsg;
+        that.errors.push(result);
+    });
 };
+
+Validator.prototype.start = function () {
+    // for(var i = 0, length = this.validators.length; i < length; i++) {
+    //     var fn = this.validators[i];
+    //     fn();
+    // }
+    while(this.validators.length !== 0) {
+        var fn = this.validators.pop();
+        fn();
+    }
+}
 
 var defaultStrategies = {
     // 是否非空对象
