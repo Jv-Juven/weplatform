@@ -26,5 +26,5 @@ const app = new Vue({
     template: '<App/>',
     components: { App },
     router,
-    store
+    // store
 });

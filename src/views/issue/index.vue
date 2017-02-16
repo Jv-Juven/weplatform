@@ -1,5 +1,5 @@
 <template lang="html">
-    <main class="main">
+    <main class="main issue">
         <!-- tabs -->
         <mu-tabs :value="activeTab" @change="handleTabChange">
             <mu-tab value="Sell" title="我是卖家" />
@@ -43,7 +43,7 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
     .tab-body {
         position: relative;
         top: 0px;
@@ -52,6 +52,18 @@
         width: 100%;
         overflow: hidden;
         background: white;
-        margin-bottom: 60px;
+        padding-bottom: 60px;
+    }
+    .issue {
+        background: white;
+        padding-bottom: 80px;
+
+        .submit-btn {
+            position: relative;
+            left: 50%;
+            transform: translate3d(-50%, 0, 0);
+
+            margin-top: 30px;
+        }
     }
 </style>

@@ -11,7 +11,7 @@
 
 <script>
 	// vuex
-	import { mapActions } from "vuex"
+	// import { mapActions } from "vuex"
 
 	// 导入相关工具
 	import Validator from "assets/js/validator"
@@ -22,7 +22,7 @@
 		},
 		computed: {},
 		mounted() {
-			this.setGoodsName("篮球");
+			// this.setGoodsName("篮球");
 
 			let formValidator = new Validator();
 			// 导入验证策略
@@ -44,9 +44,9 @@
 			t.start();
 		},
 		methods: {
-			...mapActions([
-				"setGoodsName"
-			])
+			// ...mapActions([
+			// 	"setGoodsName"
+			// ])
 		},
 		components: {}
 	}

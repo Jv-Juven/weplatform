@@ -15,9 +15,34 @@
  * @return {[Boolean]} [验证是否通过]
  */
 var Validator = function () {
-    this.strategies = {}; // 实例对象的验证策略集合
     this.validators = []; // 验证队列
     this.errors = []; // 验证函数队列
+    this.strategies = {
+        // 字符串长度最小值
+        minLength(value, length) {
+            if (!value || value.length == 0) {
+                return false;
+            } else {
+                return value.length >= length;
+            }
+        },
+        // 字符串长度最大值
+        maxLength(value, length) {
+            if (!value || value.length == 0) {
+                return false;
+            } else {
+                return value.length <= length;
+            }
+        },
+        // 是否为数字
+        isNumber(value) {
+            return !isNaN(value);
+        },
+        // 是否为手机号码
+        isPhone(value) {
+            return /^1[3|4|5|7|8]\d{9}$/.test(value);
+        }
+    }; // 实例对象的验证策略集合
 }
 
 /**
@@ -50,7 +75,7 @@ Validator.prototype.importStrategies = function (strategies) {
  * @return {[type]}            [description]
  */
 Validator.prototype.valid = function (value, ruleElement, errMsg) {
-    if (!value || !ruleElement) {
+    if (value === undefined || value === null || !ruleElement) {
         console.error("验证函数参数有误");
         return;
     }
