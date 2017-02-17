@@ -46,6 +46,7 @@
                     contactNum: "", // 号码
                     phone: "", // 手机号码，长号、短号
                     sellerRemarks: "", // 卖家补充
+                    imgs: [], // 上传的图片链接
                 },
                 contactTextArr: {
                     "1": "QQ号码",
