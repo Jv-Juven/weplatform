@@ -87,3 +87,7 @@ import Flexible from "lib-flexible"
 
 #### 引入muse-ui作为ui基本框架
 > 参考文档[MuseUI](https://museui.github.io/#/appbar)
+
+#### 引入axios作为请求后端的库
+> 参考英文文档[Axios](https://github.com/mzabriskie/axios)
+> 参考中文文档[Axios](https://ygxdxx.coding.me/2017/01/29/Axios%E7%9A%84%E9%85%8D%E7%BD%AE/)

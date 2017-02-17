@@ -97,7 +97,9 @@ Validator.prototype.valid = function (value, ruleElement, errMsg) {
         // 执行验证函数, 正确返回true，错误返回errMsg
         result = that.strategies[ruleName].apply(that, params);
         result = !!result ? result : errMsg;
-        that.errors.push(result);
+        if (result !== true) {
+            that.errors.push(result);
+        }
     });
 };
 
@@ -107,7 +109,7 @@ Validator.prototype.start = function () {
     //     fn();
     // }
     while(this.validators.length !== 0) {
-        var fn = this.validators.pop();
+        var fn = this.validators.shift();
         fn();
     }
 }

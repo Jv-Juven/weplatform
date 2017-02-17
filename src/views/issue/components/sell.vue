@@ -20,8 +20,13 @@
             <mu-text-field class="input" labelFloat v-model="formData.phone" label="手机号码" hintText="手机号码" fullWidth />
             <!-- 卖家补充 -->
             <mu-text-field class="input" labelFloat v-model="formData.sellerRemarks" label="卖家补充" hintText="卖家补充" multiLine :rows="3" :rowsMax="6" fullWidth/><br/>
-            <!-- 图片上传 -->
-            <mu-flat-button label="选择图片" class="demo-flat-button" labelPosition="before" icon="folder" secondary/>
+            <!-- 图片上传按钮 -->
+            <mu-raised-button label="选择图片" class="demo-raised-button upload-img-btn" secondary/>
+            <!-- 已上传图片展示区  -->
+            <div class="uploaded-imgs-wrapper">
+                <!-- 图片展示框 -->
+                <mu-paper class="demo-paper" :zDepth="1" v-for="n in 10"/>
+            </div>
             <!-- 页面信息 -->
             <mu-content-block class="marks">
                 我们将会通过短信通知您物品编号以及期数，请在物品出售后及时告知公众号已售物品编号及出售时间，以便我们做好登记与下架手续，能够让买家及时得到物品信息。。
@@ -54,6 +59,12 @@
                 }
             }
     	},
+        props: {
+            showErrorsDialog: {
+                default: Function,
+                default() {}
+            }
+        },
     	computed: {
             contactText() {
                 let contactWay = this.formData.contactWay;
@@ -74,10 +85,11 @@
                     validator.valid(this.formData.contactNum, "isNumber", "请输入数字QQ号码");
                     validator.valid(this.formData.contactNum, "minLength:1", "请输入QQ号码");
                 } else {
-                    validator.valid(this.formData.contactNum, "minLength:1", "请输入微信号码");
+                    validator.valid(this.formData.contactNum, "minLength:1", "请输入微信号");
                 }
                 validator.valid(this.formData.phone, "isPhone", "手机号码有误，请重新填写");
                 validator.start();
+                this.showErrorsDialog(validator.errors[0]);
                 console.log(validator.errors);
             }
         },
@@ -96,8 +108,32 @@
         padding-left: 30px;
     }
     .marks {
+        border-top: 1px solid rgb(240, 240, 240); /*no*/
+        margin-top: 30px;
+        padding-top: 30px;
         padding-bottom: 30px;
         font-size: 28px;
         text-indent: 56px; /*px*/
+    }
+    .upload-img-btn {
+        position: relative;
+        left: 50%;
+
+        transform: translateX(-50%);
+    }
+    .uploaded-imgs-wrapper {
+        width: 100%;
+        overflow: hidden;
+        padding: 5px 0;
+    }
+    .demo-paper {
+        @w: 240px;
+
+        float: left;
+
+        width: @w;
+        height: @w;
+        margin-top: 10px;
+        margin-left: 7.5px;
     }
 </style>
