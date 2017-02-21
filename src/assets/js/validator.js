@@ -108,10 +108,6 @@ Validator.prototype.valid = function (value, ruleElement, errMsg) {
 };
 
 Validator.prototype.start = function () {
-    // for(var i = 0, length = this.validators.length; i < length; i++) {
-    //     var fn = this.validators[i];
-    //     fn();
-    // }
     while(this.validators.length !== 0) {
         var fn = this.validators.shift();
         fn();
