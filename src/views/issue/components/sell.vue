@@ -38,7 +38,9 @@
 </template>
 
 <script>
-    import Validator from "assets/js/validator"
+    import Validator from "assets/js/validator";
+    // api
+    import api from "api";
     export default {
     	data() {
     		return {
@@ -76,6 +78,7 @@
             // 表单提交
             submitFn() {
                 let validator = new Validator();
+                let vm = this;
                 validator.valid(this.formData.goodsName, "minLength:1", "请输入物品名称");
                 validator.valid(this.formData.goodsName, "maxLength:40", "请输入不多于40个字符的物品名称");
                 validator.valid(this.formData.intro, "minLength:1", "请输入物品简介");
@@ -89,8 +92,19 @@
                 }
                 validator.valid(this.formData.phone, "isPhone", "手机号码有误，请重新填写");
                 validator.start();
-                this.showErrorsDialog(validator.errors[0]);
-                console.log(validator.errors);
+                if (!!validator.errors[0]) {
+                    this.showErrorsDialog(validator.errors[0]);
+                    return;
+                }
+                api({
+                    method: "post",
+                    url: "/postIssueInfo",
+                    data: vm.formData
+                }).then((res) => {
+                    console.warn("后端返回：", res);
+                });
+                // console.log(validator.errors);
+
             }
         },
     	components: {}
