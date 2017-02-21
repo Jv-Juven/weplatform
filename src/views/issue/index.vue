@@ -46,10 +46,10 @@
         },
         computed: {},
         mounted() {
-            api({
-                method: "get",
-                url: "/lottery"
-            });
+            // api({
+            //     method: "get",
+            //     url: "/lottery"
+            // });
         },
         methods: {
             // 却换到tab函数

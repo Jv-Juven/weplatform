@@ -17,32 +17,36 @@
 var Validator = function () {
     this.validators = []; // 验证队列
     this.errors = []; // 验证函数队列
-    this.strategies = {
-        // 字符串长度最小值
-        minLength(value, length) {
-            if (!value || value.length == 0) {
-                return false;
-            } else {
-                return value.length >= length;
-            }
-        },
-        // 字符串长度最大值
-        maxLength(value, length) {
-            if (!value || value.length == 0) {
-                return false;
-            } else {
-                return value.length <= length;
-            }
-        },
-        // 是否为数字
-        isNumber(value) {
-            return !isNaN(value);
-        },
-        // 是否为手机号码
-        isPhone(value) {
-            return /^1[3|4|5|7|8]\d{9}$/.test(value);
+    this.strategies = {}; // 实例对象的验证策略集合
+
+    this.importStrategies(this.defaultStrategies); // 导入默认的验证策略
+}
+// 默认验证策略
+Validator.prototype.defaultStrategies = {
+    // 字符串长度最小值
+    minLength(value, length) {
+        if (!value || value.length == 0) {
+            return false;
+        } else {
+            return value.length >= length;
         }
-    }; // 实例对象的验证策略集合
+    },
+    // 字符串长度最大值
+    maxLength(value, length) {
+        if (!value || value.length == 0) {
+            return false;
+        } else {
+            return value.length <= length;
+        }
+    },
+    // 是否为数字
+    isNumber(value) {
+        return !isNaN(value);
+    },
+    // 是否为手机号码
+    isPhone(value) {
+        return /^1[3|4|5|7|8]\d{9}$/.test(value);
+    }
 }
 
 /**

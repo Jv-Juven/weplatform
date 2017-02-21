@@ -44,7 +44,7 @@
     		return {
                 formData: {
                     goodsName: "", // 物品名
-                    intro: "", //物品简介
+                    intro: "", // 物品简介
                     price: "0.00", // 价格
                     nickName: "", // 昵称
                     contactWay: "1", // 联系方式， 1: QQ, 2: Wechat

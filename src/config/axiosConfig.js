@@ -17,19 +17,19 @@ axios.interceptors.request.use((config) => {
 	}
 	return config;
 }, (error) => {
-	console.error("错误的传参");
+	console.error("axios配置：错误的传参");
 	return Promise.reject(error);
 });
 
 //code状态码200判断
 axios.interceptors.response.use((res) => {
 	if (res.data.code != '200') {
-		console.error(res.data);
+		console.error("axios配置：", res.data);
 		return Promise.reject(res);
 	}
 	return res;
 }, (error) => {
-	console.error("网络异常");
+	console.error("axios配置：网络异常");
 	return Promise.reject(error);
 });
 export default axios;
