@@ -24,13 +24,13 @@
             <div id="upload_wrapper">
                 <mu-raised-button id="upload_btn" label="选择图片" class="demo-raised-button upload-img-btn" secondary/>
             </div>
-            <mu-content-block class="marks">
+            <mu-content-block class="marks state-intro">
                 最多可上传9张图片，若选择多于9张图片，则以上传最后9张图片。
             </mu-content-block>
             <!-- 已上传图片展示区  -->
             <div class="uploaded-imgs-wrapper">
                 <!-- 图片展示框 -->
-                <mu-paper class="demo-paper" :zDepth="1" v-for="src in formData.imgs" :style="setBgImg(src)"/>
+                <mu-paper class="demo-paper" :zDepth="1" v-for="src in formData.imgs" :style="imgStyles[src]"/>
             </div>
             <!-- 页面信息 -->
             <mu-content-block class="marks">
@@ -64,7 +64,8 @@
                 contactTextArr: {
                     "1": "QQ号码",
                     "2": "微信号码"
-                }
+                },
+                imgStyles: {}
             }
     	},
         props: {
@@ -89,6 +90,8 @@
                 domain: 'http://olpfzbm3k.bkt.clouddn.com/'
             }, {
                 getUrl(imgUrl) {
+                    // 定制图片的样式
+                    vm.setBgImg(imgUrl);
                     // 获取上传之后的图片链接
                     vm.formData.imgs.push(imgUrl);
                 },
@@ -138,10 +141,27 @@
             },
             // 设置背景色
             setBgImg(src) {
-                return {
+                let result = {
                     background: `url(${src})`,
                     backgroundSize: "100% auto",
+                    backgroundPosition: "center",
                     backgroundRepeat: "no-repeat"
+                }
+                let img = new Image();
+                img.src = src;
+                img.onload = () => {
+                    console.log(img.width);
+                    if (img.width > img.height) {
+                        result.backgroundSize = "auto 100%";
+                    }
+                    this.imgStyles = Object.assign({}, this.imgStyles, {
+                        [src]: result
+                    });
+                }
+                img.onerror = () => {
+                    this.imgStyles = Object.assign({}, this.imgStyles, {
+                        [src]: result
+                    });
                 }
             }
         },
@@ -166,6 +186,9 @@
         padding-bottom: 30px;
         font-size: 28px;
         text-indent: 56px; /*px*/
+    }
+    .state-intro {
+        color: #989898;
     }
     .upload-img-btn {
         position: relative;
