@@ -21,11 +21,16 @@
             <!-- 卖家补充 -->
             <mu-text-field class="input" labelFloat v-model="formData.sellerRemarks" label="卖家补充" hintText="卖家补充" multiLine :rows="3" :rowsMax="6" fullWidth/><br/>
             <!-- 图片上传按钮 -->
-            <mu-raised-button label="选择图片" class="demo-raised-button upload-img-btn" secondary/>
+            <div id="upload_wrapper">
+                <mu-raised-button id="upload_btn" label="选择图片" class="demo-raised-button upload-img-btn" secondary/>
+            </div>
+            <mu-content-block class="marks">
+                最多可上传9张图片，若选择多于9张图片，则以上传最后9张图片。
+            </mu-content-block>
             <!-- 已上传图片展示区  -->
             <div class="uploaded-imgs-wrapper">
                 <!-- 图片展示框 -->
-                <mu-paper class="demo-paper" :zDepth="1" v-for="n in 10"/>
+                <mu-paper class="demo-paper" :zDepth="1" v-for="src in formData.imgs" :style="setBgImg(src)"/>
             </div>
             <!-- 页面信息 -->
             <mu-content-block class="marks">
@@ -39,6 +44,7 @@
 
 <script>
     import Validator from "assets/js/validator";
+    import upload from "../assets/qinniuUpload";
     // api
     import api from "api";
     export default {
@@ -73,7 +79,32 @@
                 return this.contactTextArr[contactWay] || "联系号码";
             }
         },
-    	mounted() {},
+    	mounted() {
+            let vm = this;
+            // 上传组件初始化
+            upload({
+                browse_button: "upload_btn",
+                container: "upload_wrapper",
+                uptoken_url: "http://10.100.31.217:3080/getToken/",
+                domain: 'http://olpfzbm3k.bkt.clouddn.com/'
+            }, {
+                getUrl(imgUrl) {
+                    // 获取上传之后的图片链接
+                    vm.formData.imgs.push(imgUrl);
+                },
+                beforeUpload(uploader) {
+                    console.log(uploader.files);
+                    // 上传的图片总数
+                    let filesLength = uploader.files.length + vm.formData.imgs.length;
+                    if (filesLength > 9) {
+                        vm.showErrorsDialog("上传的图片不能大于9张");
+                        uploader.splice(0, filesLength);
+                    } else {
+                        uploader.start();
+                    }
+                }
+            });
+        },
     	methods: {
             // 表单提交
             submitFn() {
@@ -103,8 +134,15 @@
                 }).then((res) => {
                     console.warn("后端返回：", res);
                 });
-                // console.log(validator.errors);
 
+            },
+            // 设置背景色
+            setBgImg(src) {
+                return {
+                    background: `url(${src})`,
+                    backgroundSize: "100% auto",
+                    backgroundRepeat: "no-repeat"
+                }
             }
         },
     	components: {}

@@ -7,7 +7,7 @@ import routes from "./config/routerConfig"
 import store from 'store'
 
 import Flexible from "lib-flexible"
-
+// import vconsole from "vconsole"
 // 加入muse-ui
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
