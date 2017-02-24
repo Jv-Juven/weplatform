@@ -1,15 +1,17 @@
 <template lang="html">
     <div class="stalls">
         <ul class="stalls-wrapper">
-            <li class="stalls-item" ref="stalls-item" v-for="n in 10">
+            <li class="stalls-item" ref="stalls-item" v-for="imgData in allData">
                 <!-- 需要图片加载函数 -->
-                <h1 class="item-title">{{goodsName}}</h1>
-                <h2 class="item-subtitle">{{intro}}</h2>
+                <h1 class="item-title">{{imgData.goodsName}}</h1>
+                <h2 class="item-subtitle">{{imgData.intro}}</h2>
                 <section class="imgs-field">
-                    <img class="img-box" src="http://img05.tooopen.com/images/20150202/sy_80219211654.jpg" v-for="n in 1"></img>
+                    <transition name="fade" v-for="src in imgData.showedImgs">
+                        <img class="img-box" :src="src"></img>
+                    </transition>
                 </section>
-                <div class="ims-btn">
-                    查看更多图片
+                <div class="ims-btn" @click="toggleMoreFn(imgData)">
+                    {{imgData.showAll ? "收起" : "查看更多图片"}}
                 </div>
                 <div class="content-field">
                     <ul class="info-wrapper">
@@ -18,7 +20,7 @@
                                 价格：
                             </span>
                             <span class="info-content price">
-                                ￥{{price}}
+                                ￥{{imgData.price}}
                             </span>
                         </li>
                         <li class="info-item">
@@ -26,15 +28,15 @@
                                 联系人：
                             </span>
                             <span class="info-content">
-                                {{nickName}}
+                                {{imgData.nickName}}
                             </span>
                         </li>
                         <li class="info-item">
                             <span class="info-title">
-                                {{contactWay == "1" ? "QQ" : "Wechat"}}：
+                                {{imgData.contactWay == "1" ? "QQ" : "Wechat"}}：
                             </span>
                             <span class="info-content">
-                                {{contactNum}}
+                                {{imgData.contactNum}}
                             </span>
                         </li>
                         <li class="info-item">
@@ -42,7 +44,7 @@
                                 手机号码：
                             </span>
                             <span class="info-content">
-                                {{phone}}
+                                {{imgData.phone}}
                             </span>
                         </li>
                         <li class="info-item">
@@ -50,7 +52,7 @@
                                 备注：
                             </span>
                             <span class="info-content">
-                                {{sellerRemarks}}
+                                {{imgData.sellerRemarks}}
                             </span>
                         </li>
                     </ul>
@@ -61,6 +63,8 @@
 </template>
 
 <script>
+    // api
+    import api from "api";
     export default {
     	data() {
     		return {
@@ -72,17 +76,56 @@
                 contactNum: "954415852", // 号码
                 phone: "15899651258", // 手机号码，长号、短号
                 sellerRemarks: "这个手机壳图片是我男朋友为我画的，我很喜欢，希望有人吃这狗粮。图片质量不错，可以算的是上等品，高级塑料打造成的图片卡片。", // 卖家补充
+
+                allData: [], // 总数据
             }
     	},
     	computed: {},
     	mounted() {
+            this.getData(0, 10);
         },
-    	methods: {},
+    	methods: {
+            // 获取数据
+            getData(pageNum, pageSize) {
+                api.get(`/getGoods/${pageNum}/${pageSize}`)
+                    .then((res) => {
+                        let allData = res.data.rows || [];
+                        allData.forEach((data) => {
+                            this.parseImgsUrl(data);
+                        });
+                        this.allData = allData;
+                    })
+                    .catch((res) => {
+                        console.error(res);
+                    });
+            },
+            // 处理图片链接数据
+            parseImgsUrl(dataUnit) {
+                if (!!dataUnit && !!dataUnit.imgs) {
+                    let singleImg = [];
+                    dataUnit.imgs = dataUnit.imgs.split(","); // 总图片链接数组
+                    singleImg.push(dataUnit.imgs[0]);
+                    dataUnit.oneImg = singleImg; // 默认显示的图片数组
+                    dataUnit.showAll = false; // 不显示全部图片
+                    dataUnit.showedImgs = singleImg; // 显示的图片的数据
+                }
+            },
+            // 查看更多图片
+            toggleMoreFn(imgData) {
+                imgData.showAll = !imgData.showAll;
+                if (imgData.showAll) {
+                    imgData.showedImgs = imgData.imgs; // 显示的图片的数据
+                } else {
+                    imgData.showedImgs = imgData.oneImg; // 显示的图片的数据
+                }
+            }
+        },
     	components: {}
     }
 </script>
 
 <style lang="less">
+    @import "../../assets/less/transition.less";
     .stalls {
         height: 100%;
         overflow-y: auto;
@@ -95,6 +138,7 @@
             border-top: 0;
         }
         .item-title {
+            color: #27abe4;
             margin: 0;
         }
         .item-subtitle {
