@@ -13,7 +13,7 @@ export default function (options, events) {
         //    // do something
         //    return uptoken;
         // },
-        get_new_uptoken: false,             // 设置上传文件的时候是否每次都重新获取新的uptoken
+        get_new_uptoken: true,             // 设置上传文件的时候是否每次都重新获取新的uptoken
         // downtoken_url: '/downtoken',
         // Ajax请求downToken的Url，私有空间时使用，JS-SDK将向该地址POST文件的key和domain，服务端返回的JSON必须包含url字段，url值为该文件的下载地址
         // unique_names: true,              // 默认false，key为文件名。若开启该选项，JS-SDK会为每个文件自动生成key（文件名）

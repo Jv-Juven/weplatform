@@ -8,7 +8,7 @@ import qs from 'qs'
 axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.baseURL = 'http://10.100.31.217:3080';
-// axios.defaults.baseURL = 'http://192.168.1.129:8383';
+// axios.defaults.baseURL = 'http://www.makerh5.com:3080/';
 
 //POST传参序列化
 axios.interceptors.request.use((config) => {
