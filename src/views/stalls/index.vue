@@ -5,7 +5,7 @@
                 <!-- 需要图片加载函数 -->
                 <h1 class="item-title">{{imgData.goodsName}}</h1>
                 <h2 class="item-subtitle">{{imgData.intro}}</h2>
-                <section class="imgs-field">
+                <section class="imgs-field" @click="showMoreImages(imgData.imgs)">
                     <transition name="fade" v-for="src in imgData.showedImgs">
                         <img class="img-box" :src="src"></img>
                     </transition>
@@ -59,10 +59,17 @@
                 </div>
             </li>
         </ul>
+
+        <!-- 图片预览 -->
+        <pre-view
+            :images="preImages"
+            v-if="preImages.length > 0"
+        ></pre-view>
     </div>
 </template>
 
 <script>
+    import PreView from "components/preView";
     // api
     import api from "api";
     export default {
@@ -76,6 +83,8 @@
                 contactNum: "954415852", // 号码
                 phone: "15899651258", // 手机号码，长号、短号
                 sellerRemarks: "这个手机壳图片是我男朋友为我画的，我很喜欢，希望有人吃这狗粮。图片质量不错，可以算的是上等品，高级塑料打造成的图片卡片。", // 卖家补充
+
+                preImages: [], // 预览的图片
 
                 allData: [], // 总数据
             }
@@ -118,9 +127,17 @@
                 } else {
                     imgData.showedImgs = imgData.oneImg; // 显示的图片的数据
                 }
+            },
+            // 预览更多图片
+            showMoreImages(imgs) {
+                if (imgs && imgs.length > 0) {
+                    this.preImages = imgs;
+                }
             }
         },
-    	components: {}
+    	components: {
+            PreView
+        }
     }
 </script>
 
