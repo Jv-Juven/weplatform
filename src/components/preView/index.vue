@@ -1,6 +1,6 @@
 <template lang="html">
     <transition name="fade">
-        <main class="preView-wrapper" @click="closePreView()">
+        <main class="preView-wrapper" @click="close">
             <div class="bg-pannel"></div>
             <div class="swiper-container preView-container">
                 <div class="swiper-wrapper preView-wrapper">
@@ -51,8 +51,8 @@ export default {
                 backgroundPosition: "center"
             }
         },
-        closePreView() {
-            this.images = [];
+        close() {
+            this.$emit("closePreView");
         }
     },
 	components: {}

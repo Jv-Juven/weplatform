@@ -63,6 +63,7 @@
         <!-- 图片预览 -->
         <pre-view
             :images="preImages"
+            v-on:closePreView="closePreView"
             v-if="preImages.length > 0"
         ></pre-view>
     </div>
@@ -133,6 +134,10 @@
                 if (imgs && imgs.length > 0) {
                     this.preImages = imgs;
                 }
+            },
+            // 关闭预览框
+            closePreView() {
+                this.preImages = [];
             }
         },
     	components: {

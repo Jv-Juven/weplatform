@@ -86,7 +86,7 @@
             upload({
                 browse_button: "upload_btn",
                 container: "upload_wrapper",
-                uptoken_url: "http://10.100.31.217:3080/getToken/",
+                uptoken_url: "http://localhost:3080/getToken/",
                 domain: 'http://7xtj5v.com2.z0.glb.qiniucdn.com/'
             }, {
                 getUrl(imgUrl) {
