@@ -1,13 +1,13 @@
 <template lang="html">
     <transition name="fade">
-        <main class="preView-wrapper" @click="close">
+        <section class="preView-wrapper" @click="close">
             <div class="bg-pannel"></div>
             <div class="swiper-container preView-container">
                 <div class="swiper-wrapper preView-wrapper">
                     <div class="swiper-slide preView-slide" v-for="img in images" :style="setBgImg(img)"></div>
                 </div>
             </div>
-        </main>
+        </section>
     </transition>
 </template>
 
