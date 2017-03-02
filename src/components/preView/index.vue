@@ -69,6 +69,7 @@ export default {
 
         .preView-container {
             .full-screen();
+            background: rgba(0, 0, 0, .9);
         }
 
         .preView-wrapper {}
