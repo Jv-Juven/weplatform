@@ -1,7 +1,11 @@
 <template lang="html">
-<section>
+<section class="grid">
     <ul class="grid-wrapper">
-        <li class="grid-item" v-for="imgUrl in imgUrls" :style="imgStyles[imgUrl]"></li>
+        <li class="grid-item"
+            v-for="(imgUrl, key) in imgUrls"
+            :style="imgStyles[imgUrl]"
+            @click="selImg(key)"
+        ></li>
     </ul>
 </section>
 </template>
@@ -22,8 +26,13 @@ export default {
         }
     },
 	computed: {},
-	mounted() {},
+	mounted() {
+        this.imgUrls.forEach((url) => {
+            this.setStyles(url);
+        });
+    },
 	methods: {
+        // 为每张图片设置样式
 		setStyles(imgUrl) {
 			if (imgUrl && imgUrl.length > 0 && !this.imgStyles[imgUrl]) {
                 let img = new Image();
@@ -39,39 +48,43 @@ export default {
                     } else {
                         styleObject.backgroundSize = "100% auto";
                     }
-                    this.$set(imgStyles, [imgUrl], styleObject);
+                    this.$set(this.imgStyles, [imgUrl], styleObject);
                 }
 			}
-		}
-	},
-    watch: {
-        imgUrls: {
-            handler(newVal) {
-                newVal.forEach((url) => {
-                    this.setStyles(url);
-                });
-            },
-            deep: true
-
+		},
+        // 选择图片
+        selImg(key) {
+            this.$emit('selImg', key, this.imgUrls);
         }
-    },
+	},
+    watch: {},
 	components: {}
 }
 </script>
 
-<style lang="less">@full_width: 750px;
+<style lang="less">
+@full_width: 750px;
 @item_width: 240px;
 @aside_space: (@full_width - @item_width * 3)/4;
-.grid-wrapper {
-    width: 100%;
+.grid {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 
-    .grid-item {
-        float: left;
+    width: @full_width;
 
-        width: @item_width;
-        height: @item_width;
-        margin-top: @aside_space;
-        margin-left: @aside_space;
+    .grid-wrapper {
+        width: 100%;
+        overflow: hidden;
+
+        .grid-item {
+            float: left;
+
+            width: @item_width;
+            height: @item_width;
+            margin-top: @aside_space;
+            margin-left: @aside_space;
+        }
     }
 }
 </style>

@@ -29,7 +29,8 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'views': path.resolve(__dirname, '../src/views'),
       'store': path.resolve(__dirname, '../src/store'),
-      'api': path.resolve(__dirname, '../src/config/axiosConfig')
+      'api': path.resolve(__dirname, '../src/config/axiosConfig'),
+      'config': path.resolve(__dirname, '../src/config')
     }
   },
   resolveLoader: {

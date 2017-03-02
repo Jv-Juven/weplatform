@@ -45,6 +45,8 @@
 <script>
     import Validator from "assets/js/validator";
     import upload from "../assets/qinniuUpload";
+
+    import { Host } from "config/Host"
     // api
     import api from "api";
     export default {
@@ -86,7 +88,7 @@
             upload({
                 browse_button: "upload_btn",
                 container: "upload_wrapper",
-                uptoken_url: "http://localhost:3080/getToken/",
+                uptoken_url: `${Host}/getToken/`,
                 domain: 'http://7xtj5v.com2.z0.glb.qiniucdn.com/'
             }, {
                 getUrl(imgUrl) {

@@ -5,14 +5,18 @@
                 <!-- 需要图片加载函数 -->
                 <h1 class="item-title">{{imgData.goodsName}}</h1>
                 <h2 class="item-subtitle">{{imgData.intro}}</h2>
-                <section class="imgs-field" @click="showMoreImages(imgData.imgs)">
+                <grid
+                    :img-urls="imgData.imgs"
+                    v-on:selImg="showMoreImages"
+                ></grid>
+                <!-- <section class="imgs-field" @click="showMoreImages(imgData.imgs)">
                     <transition name="fade" v-for="src in imgData.showedImgs">
                         <img class="img-box" :src="src"></img>
                     </transition>
                 </section>
                 <div class="ims-btn" @click="toggleMoreFn(imgData)">
                     {{imgData.showAll ? "收起" : "查看更多图片"}}
-                </div>
+                </div> -->
                 <div class="content-field">
                     <ul class="info-wrapper">
                         <li class="info-item">
@@ -63,6 +67,7 @@
         <!-- 图片预览 -->
         <pre-view
             :images="preImages"
+            :init-index="currentImgIndex"
             v-on:closePreView="closePreView"
             v-if="preImages.length > 0"
         ></pre-view>
@@ -71,6 +76,7 @@
 
 <script>
     import PreView from "components/preView";
+    import Grid from "components/grid";
     // api
     import api from "api";
     export default {
@@ -86,6 +92,7 @@
                 // sellerRemarks: "这个手机壳图片是我男朋友为我画的，我很喜欢，希望有人吃这狗粮。图片质量不错，可以算的是上等品，高级塑料打造成的图片卡片。", // 卖家补充
 
                 preImages: [], // 预览的图片
+                currentImgIndex: 0, // 预览的当前图片索引
 
                 allData: [], // 总数据
             }
@@ -112,27 +119,30 @@
             // 处理图片链接数据
             parseImgsUrl(dataUnit) {
                 if (!!dataUnit && !!dataUnit.imgs) {
-                    let singleImg = [];
+                    // let singleImg = [];
                     dataUnit.imgs = dataUnit.imgs.split(","); // 总图片链接数组
-                    singleImg.push(dataUnit.imgs[0]);
-                    dataUnit.oneImg = singleImg; // 默认显示的图片数组
-                    dataUnit.showAll = false; // 不显示全部图片
-                    dataUnit.showedImgs = singleImg; // 显示的图片的数据
+                    // singleImg.push(dataUnit.imgs[0]);
+                    // dataUnit.oneImg = singleImg; // 默认显示的图片数组
+                    // dataUnit.showAll = false; // 不显示全部图片
+                    // dataUnit.showedImgs = singleImg; // 显示的图片的数据
                 }
             },
             // 查看更多图片
-            toggleMoreFn(imgData) {
-                imgData.showAll = !imgData.showAll;
-                if (imgData.showAll) {
-                    imgData.showedImgs = imgData.imgs; // 显示的图片的数据
-                } else {
-                    imgData.showedImgs = imgData.oneImg; // 显示的图片的数据
-                }
-            },
+            // toggleMoreFn(imgData) {
+            //     imgData.showAll = !imgData.showAll;
+            //     if (imgData.showAll) {
+            //         imgData.showedImgs = imgData.imgs; // 显示的图片的数据
+            //     } else {
+            //         imgData.showedImgs = imgData.oneImg; // 显示的图片的数据
+            //     }
+            // },
             // 预览更多图片
-            showMoreImages(imgs) {
+            showMoreImages(index, imgs) {
+                index = index || 0;
                 if (imgs && imgs.length > 0) {
                     this.preImages = imgs;
+                    this.currentImgIndex = index;
+                    // console.log("showMoreImages", this.currentImgIndex);
                 }
             },
             // 关闭预览框
@@ -141,7 +151,8 @@
             }
         },
     	components: {
-            PreView
+            PreView,
+            Grid
         }
     }
 </script>

@@ -23,20 +23,15 @@ export default {
             default() {
                 return [];
             }
-            // twoWay: true
         },
         initIndex: {
             default: 0
-            // twoWay: true
         }
     },
-	computed: {
-        // showPreView() {
-        //     return this.images.length > 0;
-        // }
-    },
+	computed: {},
 	mounted() {
         let vm = this;
+        // console.log("initIndex", this.initIndex);
         let preViewSwiper = new Swiper(".preView-container", {
             spaceBetween: 0, // slide之间的距离（单位px）
             initialSlide: vm.initIndex || 0
