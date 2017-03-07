@@ -17,7 +17,7 @@
                                     价格：
                                 </span>
                                 <span class="info-content price">
-                                    ￥{{imgData.price}}
+                                    ￥{{imgData.price.toFixed(2)}}
                                 </span>
                             </li>
                             <li class="info-item">
