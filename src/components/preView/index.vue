@@ -7,6 +7,7 @@
                     <div class="swiper-slide preView-slide" v-for="img in images" :style="setBgImg(img)"></div>
                 </div>
             </div>
+             <div class="swiper-pagination preView-pagination"></div>
         </section>
     </transition>
 </template>
@@ -38,7 +39,9 @@ export default {
         let vm = this;
         let preViewSwiper = new Swiper(".preView-container", {
             spaceBetween: 0, // slide之间的距离（单位px）
-            initialSlide: vm.initIndex || 0
+            initialSlide: vm.initIndex || 0,
+            pagination : '.swiper-pagination',
+            paginationType : 'fraction'
         });
         // 阻止背景被滑动事件
         preventTouch();
@@ -84,5 +87,12 @@ export default {
         .preView-wrapper {}
 
         .preView-slide {}
+
+        .preView-pagination {
+            color: white;
+            // span {
+            //     color: white;
+            // }
+        }
     }
 </style>
