@@ -13,6 +13,11 @@
 
 <script>
 import Swiper from "swiper";
+// 引入相关js库
+import {
+    preventTouch,
+    allowTouch
+} from "assets/js/touchEvents"
 export default {
 	data() {
 		return {}
@@ -31,11 +36,15 @@ export default {
 	computed: {},
 	mounted() {
         let vm = this;
-        // console.log("initIndex", this.initIndex);
         let preViewSwiper = new Swiper(".preView-container", {
             spaceBetween: 0, // slide之间的距离（单位px）
             initialSlide: vm.initIndex || 0
         });
+        // 阻止背景被滑动事件
+        preventTouch();
+    },
+    destroyed() {
+        allowTouch();
     },
 	methods: {
         setBgImg(imgUrl) {

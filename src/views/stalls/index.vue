@@ -1,68 +1,62 @@
 <template lang="html">
     <div class="stalls">
-        <ul class="stalls-wrapper">
-            <li class="stalls-item" ref="stalls-item" v-for="imgData in allData">
-                <!-- 需要图片加载函数 -->
-                <h1 class="item-title">{{imgData.goodsName}}</h1>
-                <h2 class="item-subtitle">{{imgData.intro}}</h2>
-                <grid
+        <div class="stalls-container">
+            <ul class="stalls-wrapper">
+                <li class="stalls-item" ref="stalls-item" v-for="imgData in allData">
+                    <!-- 需要图片加载函数 -->
+                    <h1 class="item-title">{{imgData.goodsName}}</h1>
+                    <h2 class="item-subtitle">{{imgData.intro}}</h2>
+                    <grid
                     :img-urls="imgData.imgs"
                     v-on:selImg="showMoreImages"
-                ></grid>
-                <!-- <section class="imgs-field" @click="showMoreImages(imgData.imgs)">
-                    <transition name="fade" v-for="src in imgData.showedImgs">
-                        <img class="img-box" :src="src"></img>
-                    </transition>
-                </section>
-                <div class="ims-btn" @click="toggleMoreFn(imgData)">
-                    {{imgData.showAll ? "收起" : "查看更多图片"}}
-                </div> -->
-                <div class="content-field">
-                    <ul class="info-wrapper">
-                        <li class="info-item">
-                            <span class="info-title">
-                                价格：
-                            </span>
-                            <span class="info-content price">
-                                ￥{{imgData.price}}
-                            </span>
-                        </li>
-                        <li class="info-item">
-                            <span class="info-title">
-                                联系人：
-                            </span>
-                            <span class="info-content">
-                                {{imgData.nickName}}
-                            </span>
-                        </li>
-                        <li class="info-item">
-                            <span class="info-title">
-                                {{imgData.contactWay == "1" ? "QQ" : "Wechat"}}：
-                            </span>
-                            <span class="info-content">
-                                {{imgData.contactNum}}
-                            </span>
-                        </li>
-                        <li class="info-item">
-                            <span class="info-title">
-                                手机号码：
-                            </span>
-                            <span class="info-content">
-                                {{imgData.phone}}
-                            </span>
-                        </li>
-                        <li class="info-item">
-                            <span class="info-title">
-                                备注：
-                            </span>
-                            <span class="info-content">
-                                {{imgData.sellerRemarks}}
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
+                    ></grid>
+                    <div class="content-field">
+                        <ul class="info-wrapper">
+                            <li class="info-item">
+                                <span class="info-title">
+                                    价格：
+                                </span>
+                                <span class="info-content price">
+                                    ￥{{imgData.price}}
+                                </span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-title">
+                                    联系人：
+                                </span>
+                                <span class="info-content">
+                                    {{imgData.nickName}}
+                                </span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-title">
+                                    {{imgData.contactWay == "1" ? "QQ" : "Wechat"}}：
+                                </span>
+                                <span class="info-content">
+                                    {{imgData.contactNum}}
+                                </span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-title">
+                                    手机号码：
+                                </span>
+                                <span class="info-content">
+                                    {{imgData.phone}}
+                                </span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-title">
+                                    备注：
+                                </span>
+                                <span class="info-content">
+                                    {{imgData.sellerRemarks}}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
         <!-- 图片预览 -->
         <pre-view
@@ -160,8 +154,15 @@
 <style lang="less">
     @import "../../assets/less/transition.less";
     .stalls {
+        width: 100%;
         height: 100%;
-        overflow-y: auto;
+        // overflow-y: auto;
+
+        .stalls-container {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+        }
 
         .stalls-item {
             border-top: 1px dashed #e0e0e0; /*no*/
