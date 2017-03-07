@@ -138,8 +138,13 @@
                     data: vm.formData
                 }).then((res) => {
                     console.warn("后端返回：", res);
+                    this.showErrorsDialog(res.errMsg);
+                    this.$emit("closeDialogCallback", {
+                        "closeDialog": [function () {
+                            location.reload();
+                        }]
+                    });
                 });
-
             },
             // 设置背景色
             setBgImg(src) {
@@ -165,7 +170,16 @@
                         [src]: result
                     });
                 }
-            }
+            },
+            // 设置回调函数
+            // setCallbackFn(name, fn) {
+            //     if (!name || typeof fn !== 'function') return;
+            //     this.$emit("closeDialogCallback", {
+            //         [name]: [function () {
+            //             location.reload();
+            //         }]
+            //     });
+            // }
         },
     	components: {}
     }

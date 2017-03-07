@@ -11,6 +11,7 @@
             <component
                 :is="activeTab"
                 :show-errors-dialog="showDialog"
+                v-on:closeDialogCallback="closeDialogCallback"
             ></component>
         </keep-alive>
         <!-- dialog -->
@@ -41,7 +42,8 @@
                 dialog: {
                     isOpen: false, // 是否打开对话框
                     content: "" // 对话框内容
-                }
+                },
+                callbackFns: {}, // 回调函数队列
             }
         },
         computed: {},
@@ -71,6 +73,15 @@
             closeDialog() {
                 this.dialog.isOpen = false;
                 this.dialog.content = "";
+                // 执行回调函数
+                let fn = this.callbackFns["closeDialog"].pop();
+                fn();
+            },
+            // 关闭对话框后的回调函数 ------- 待优化：应将相同名字的数组合并，而不是替换
+            closeDialogCallback(options) {
+                if (Object.prototype.toString.call(options) == "[object Object]") {
+                    this.callbackFns = Object.assign({}, this.callbackFns, options);
+                }
             }
         },
         components: {
