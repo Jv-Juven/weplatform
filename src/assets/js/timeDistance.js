@@ -42,7 +42,7 @@ export default function (timestamp) {
     for(let timeUnit in returnTxt) {
         let num = gap/returnTxt[timeUnit]["limit"];
         if (num >= 1) {
-            num = Math.round(num);
+            num = Math.floor(num);
             return `${num}${returnTxt[timeUnit]["unitText"]}`;
         }
     }

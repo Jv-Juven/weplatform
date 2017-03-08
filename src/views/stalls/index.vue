@@ -133,24 +133,31 @@
     	methods: {
             // 获取数据
             getData(pageNum, pageSize) {
+                let startIndex = pageNum * pageSize; // 加载的数据的开始索引
+                let endIndex = (pageNum + 1) * pageSize; // 加载的数据的结束索引
                 return new Promise((resolve, reject) =>{
                     // 加载结束，不再请求数据
                     if (this.loadDataStatus == 3) {
                         return;
                     }
-                    api.get(`/getGoods/${pageNum}/${pageSize}`)
+                    api.get(`/getGoods/${startIndex}/${endIndex}`)
                         .then((res) => {
                             let allData = res.data.rows || [];
+                            let isEnded = endIndex >= res.data.count;
                             // 加载结束
-                            if (allData.length == 0) {
+                            if (isEnded) {
                                 this.loadDataStatus = 3
                             }
+                            // 处理加载后的数据
                             allData.forEach((data) => {
                                 this.parseImgsUrl(data);
                                 data.issueTime = timeDistance(data.createdAt)
                             });
+                            // 使用vue数组处理的函数拼接数据
                             this.allData.push.apply(this.allData, allData);
-                            this.pageNum++; // 页面自动加一
+                            // 页码自动加一
+                            this.pageNum++;
+
                             resolve(res);
                         })
                         .catch((res) => {
