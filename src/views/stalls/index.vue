@@ -52,6 +52,11 @@
                                     {{imgData.sellerRemarks}}
                                 </span>
                             </li>
+                            <li class="info-item">
+                                <span class="info-title time-stamp">
+                                    {{imgData.issueTime}}
+                                </span>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -69,6 +74,8 @@
 </template>
 
 <script>
+    import timeDistance from "assets/js/TimeDistance";
+
     import PreView from "components/preView";
     import Grid from "components/grid";
     // api
@@ -103,6 +110,7 @@
                         let allData = res.data.rows || [];
                         allData.forEach((data) => {
                             this.parseImgsUrl(data);
+                            data.issueTime = timeDistance(data.createdAt)
                         });
                         this.allData = allData;
                     })
@@ -177,7 +185,7 @@
         }
         .item-subtitle {
             font-size: 28px; /*px*/
-            color: #9a9a9a;
+            color: #555;
         }
         .imgs-field {
             width: 100%;
@@ -212,7 +220,7 @@
             margin-top: 8px;
         }
         .info-title {
-            color: #909290;
+            color: #777;
             // display: inline-block;
             // width: 130px;
         }
@@ -221,6 +229,12 @@
         }
         .price {
             color: #e64444;
+        }
+        .time-stamp {
+            color: #b7b7b7;
+            font-size: 24px; /*px*/
+
+            padding-top: 20px;
         }
     }
 </style>
