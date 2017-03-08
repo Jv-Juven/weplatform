@@ -139,24 +139,24 @@
                         return;
                     }
                     api.get(`/getGoods/${pageNum}/${pageSize}`)
-                    .then((res) => {
-                        let allData = res.data.rows || [];
-                        // 加载结束
-                        if (allData.length == 0) {
-                            this.loadDataStatus = 3
-                        }
-                        allData.forEach((data) => {
-                            this.parseImgsUrl(data);
-                            data.issueTime = timeDistance(data.createdAt)
+                        .then((res) => {
+                            let allData = res.data.rows || [];
+                            // 加载结束
+                            if (allData.length == 0) {
+                                this.loadDataStatus = 3
+                            }
+                            allData.forEach((data) => {
+                                this.parseImgsUrl(data);
+                                data.issueTime = timeDistance(data.createdAt)
+                            });
+                            this.allData.push.apply(this.allData, allData);
+                            this.pageNum++; // 页面自动加一
+                            resolve(res);
+                        })
+                        .catch((res) => {
+                            console.error(res);
+                            reject(res);
                         });
-                        this.allData.push.apply(this.allData, allData);
-                        this.pageNum++; // 页面自动加一
-                        resolve(res);
-                    })
-                    .catch((res) => {
-                        console.error(res);
-                        reject(res);
-                    });
                 });
             },
             // 处理图片链接数据
