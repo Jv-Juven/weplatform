@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="stalls">
-        <div class="stalls-container">
-            <ul class="stalls-wrapper">
+        <div id="stallsContainer" class="stalls-container">
+            <ul id="stallsWrapper" class="stalls-wrapper">
                 <li class="stalls-item" ref="stalls-item" v-for="imgData in allData">
                     <!-- 需要图片加载函数 -->
                     <h1 class="item-title">{{imgData.goodsName}}</h1>
@@ -60,6 +60,19 @@
                         </ul>
                     </div>
                 </li>
+                <li class="stalls-loading-container">
+                    <div class="stalls-loading-wrapper" v-show="loadDataStatus != 3">
+                        <img class="loading-img" src="../../../static/images/loading.gif" alt="">
+                        <span>
+                            正在加载
+                        </span>
+                    </div>
+                    <div class="stalls-loading-wrapper" v-show="loadDataStatus == 3">
+                        <span>
+                            没有更多了~
+                        </span>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -75,6 +88,7 @@
 
 <script>
     import timeDistance from "assets/js/TimeDistance";
+    import scrollRefresh from "assets/js/scrollRefresh";
 
     import PreView from "components/preView";
     import Grid from "components/grid";
@@ -96,27 +110,54 @@
                 currentImgIndex: 0, // 预览的当前图片索引
 
                 allData: [], // 总数据
+                pageNum: 0, // 页码
+                pageSize: 10, // 单页总数量
+                loadDataStatus: 0, // 加载数组的状态。0: 没加载，1：正在加载，3：加载结束
             }
     	},
     	computed: {},
     	mounted() {
-            this.getData(0, 10);
+            this.getData(this.pageNum, this.pageSize);
+        },
+        updated() {
+            let vm = this;
+            // 在页面dom渲染完成之后加载
+            scrollRefresh({
+                scrollContainer: document.getElementById("stallsContainer"),
+                scrollBody: document.getElementById("stallsWrapper"),
+                refreshFn() {
+                    vm.getData(vm.pageNum, vm.pageSize)
+                }
+            });
         },
     	methods: {
             // 获取数据
             getData(pageNum, pageSize) {
-                api.get(`/getGoods/${pageNum}/${pageSize}`)
+                return new Promise((resolve, reject) =>{
+                    // 加载结束，不再请求数据
+                    if (this.loadDataStatus == 3) {
+                        return;
+                    }
+                    api.get(`/getGoods/${pageNum}/${pageSize}`)
                     .then((res) => {
                         let allData = res.data.rows || [];
+                        // 加载结束
+                        if (allData.length == 0) {
+                            this.loadDataStatus = 3
+                        }
                         allData.forEach((data) => {
                             this.parseImgsUrl(data);
                             data.issueTime = timeDistance(data.createdAt)
                         });
-                        this.allData = allData;
+                        this.allData.push.apply(this.allData, allData);
+                        this.pageNum++; // 页面自动加一
+                        resolve(res);
                     })
                     .catch((res) => {
                         console.error(res);
+                        reject(res);
                     });
+                });
             },
             // 处理图片链接数据
             parseImgsUrl(dataUnit) {
@@ -160,7 +201,10 @@
 </script>
 
 <style lang="less">
+    @import "../../assets/less/func/index.less";
     @import "../../assets/less/transition.less";
+
+    @border_col: #e0e0e0;
     .stalls {
         width: 100%;
         height: 100%;
@@ -173,7 +217,7 @@
         }
 
         .stalls-item {
-            border-top: 1px dashed #e0e0e0; /*no*/
+            border-top: 1px dashed @border_col; /*no*/
             padding: 20px 30px;
         }
         .stalls-item:nth-child(1) {
@@ -235,6 +279,27 @@
             font-size: 24px; /*px*/
 
             padding-top: 20px;
+        }
+
+        .stalls-loading-container {
+            width: 100%;
+            height: 100px;
+            border-top: 1px dashed @border_col; /*no*/
+
+            .flex-layout();
+            justify-content: center;
+
+            .stalls-loading-wrapper {
+                display: inline-block;
+            }
+
+            .loading-img {
+                @w: 36px;
+                width: @w;
+                height: @w;
+
+                vertical-align: sub;
+            }
         }
     }
 </style>
