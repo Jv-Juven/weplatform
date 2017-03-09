@@ -75,6 +75,12 @@
                 </li>
             </ul>
         </div>
+        <transition name="fade">
+            <div
+                id="toggleScrollTop"
+                class="scrollTop"
+            ></div>
+        </transition>
 
         <!-- 图片预览 -->
         <pre-view
@@ -89,6 +95,7 @@
 <script>
     import timeDistance from "assets/js/TimeDistance";
     import scrollRefresh from "assets/js/scrollRefresh";
+    import scrollTop from "assets/js/scrollTop";
 
     import PreView from "components/preView";
     import Grid from "components/grid";
@@ -121,13 +128,20 @@
         },
         updated() {
             let vm = this;
+            let scrollBody = document.getElementById("stallsWrapper");
+            let scrollContainer = document.getElementById("stallsContainer");
             // 在页面dom渲染完成之后加载
             scrollRefresh({
-                scrollContainer: document.getElementById("stallsContainer"),
-                scrollBody: document.getElementById("stallsWrapper"),
+                scrollContainer: scrollContainer,
+                scrollBody: scrollBody,
                 refreshFn() {
                     vm.getData(vm.pageNum, vm.pageSize)
                 }
+            });
+
+            scrollTop({
+                toggleScrollTop: document.getElementById("toggleScrollTop"),
+                scrollContainer: scrollContainer
             });
         },
     	methods: {
@@ -307,6 +321,23 @@
 
                 vertical-align: sub;
             }
+        }
+
+        .scrollTop {
+            @w: 80px;
+            position: absolute;
+            bottom: 100px;
+            right: 80px;
+
+            width: @w;
+            height: @w;
+            border-radius: 8px; /*no*/
+            background: rgba(0, 0, 0, .3);
+            background-image: url("../../../static/images/scroll_top_arrow.png");
+            background-size: 80% auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: none;
         }
     }
 </style>
