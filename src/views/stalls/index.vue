@@ -149,7 +149,7 @@
             getData(pageNum, pageSize) {
                 let startIndex = pageNum * pageSize; // 加载的数据的开始索引
                 let endIndex = (pageNum + 1) * pageSize; // 加载的数据的结束索引
-                return new Promise((resolve, reject) =>{
+                return new Promise((resolve, reject) => {
                     // 加载结束，不再请求数据
                     if (this.loadDataStatus == 3) {
                         return;

@@ -1,6 +1,9 @@
+import bindEvents from "./bindEvents";
 /**
  * 滚动至顶部
  * @param  {[type]} options [description]
+ * options:
+ *
  * @return {[type]}         [description]
  */
 export default function (options) {
@@ -14,7 +17,7 @@ export default function (options) {
         }
         if (/\ds/.test(duration)) {
             duration = duration.replace("s", "");
-            console.log("duration", duration);
+            // console.log("duration", duration);
         }
         if (/[ms]/.test(duration)) {
             duration = duration.replace("ms", "");
@@ -35,13 +38,13 @@ export default function (options) {
         }
         requestAnimationFrame(exec);
     }
-    scrollContainer.onscroll = () => {
+    bindEvents(scrollContainer, "onscroll", () => {
         if (scrollContainer.scrollTop >= viewPortHeight) {
             toggleScrollTop.style.display = "block";
         } else {
             toggleScrollTop.style.display = "none";
         }
-    }
+    });
     toggleScrollTop.ontouchend = () => {
         let from = scrollContainer.scrollTop;
         animate(from, 0, "0.3s", (value) => {
