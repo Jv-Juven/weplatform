@@ -1,10 +1,10 @@
 import bindEvents from "./bindEvents";
 /**
  * 滚动至顶部
- * @param  {[type]} options [description]
+ * @param  {Object} options [description]
  * options:
  *
- * @return {[type]}         [description]
+ * @return {null}         [description]
  */
 export default function (options) {
     let viewPortHeight = document.body.clientHeight; // 视口高度

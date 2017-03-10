@@ -12,7 +12,7 @@
  * 9、电话号码验证；
  * 10、手机号码验证；
  * 11、是否邮箱；
- * @return {[Boolean]} [验证是否通过]
+ * @return {Boolean} [验证是否通过]
  */
 var Validator = function () {
     this.validators = []; // 验证队列

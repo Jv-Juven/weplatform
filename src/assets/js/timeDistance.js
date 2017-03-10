@@ -6,8 +6,8 @@
  * 判断：日期——跨10日或以上显示 月-日；
  * 判断：日期——隔天且现在距离时间24小时显示 “昨天”；
  * 判断：其他——显示 现在距离时间“前”；
- * @param  {[Date]} timestamp [时间戳]
- * @return {[String]}           [有效时间的最大单位数据]
+ * @param  {Date} timestamp [时间戳]
+ * @return {String}           [有效时间的最大单位数据]
  */
 export default function (timestamp) {
     if (!timestamp || (new Date(timestamp)) == "Invalid Date") {

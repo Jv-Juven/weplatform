@@ -1,7 +1,7 @@
 import bindEvents from "./bindEvents";
 /**
  * 滚动到滚动窗体的底部时执行
- * @param  {[object]} options [参数对象]
+ * @param  {Object} options [参数对象]
  * options:
  *     scrollContainer 滚动元素的父容器
  *     scrollBody 滚动容器
