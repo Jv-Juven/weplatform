@@ -64,7 +64,7 @@ export default function (options, events) {
                    var domain = up.getOption('domain');
                    var res = Qiniu.parseJSON(info);
                    var sourceLink = domain +"/"+ res.key; // 获取上传成功后的文件的Url
-                //    console.log("上传之后的图片链接：", sourceLink);
+                   console.log("上传之后的图片链接：", sourceLink);
                    events.getUrl(sourceLink);
             },
             'Error': function(up, err, errTip) {

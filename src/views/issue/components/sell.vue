@@ -88,8 +88,8 @@
             upload({
                 browse_button: "upload_btn",
                 container: "upload_wrapper",
-                uptoken_url: `${Host}/getToken/`,
-                domain: 'http://7xtj5v.com2.z0.glb.qiniucdn.com/'
+                uptoken_url: `${Host}/app/api/getToken`,
+                domain: 'http://7xtj5v.com2.z0.glb.qiniucdn.com'
             }, {
                 getUrl(imgUrl) {
                     // 定制图片的样式
@@ -134,16 +134,19 @@
                 }
                 api({
                     method: "post",
-                    url: "/postIssueInfo",
+                    url: "/app/api/issue",
                     data: vm.formData
                 }).then((res) => {
                     console.warn("后端返回：", res);
-                    this.showErrorsDialog(res.errMsg);
-                    this.$emit("closeDialogCallback", {
-                        "closeDialog": [function () {
-                            location.reload();
-                        }]
-                    });
+                    if (res.msgCode == 100) {
+                        this.$emit("closeDialogCallback", {
+                            "closeDialog": [function () {
+                                location.reload();
+                            }]
+                        });
+                    } else {
+                        this.showErrorsDialog(res.errMsg);
+                    }
                 });
             },
             // 设置背景色
